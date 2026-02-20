@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>LexEase – Analysis Output</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<style>
+:root {
+  --overlay-dark: rgba(0,0,0,0.6);
+  --glass-surface: rgba(255,255,255,0.1);
+  --glass-border: rgba(255,255,255,0.28);
+  --text-main: #ffffff;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Angsana New", serif;
+  color: var(--text-main);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  overflow-y: auto;
+  position: relative;
+}
+
+.background-video {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -2;
+}
+
+.video-overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--overlay-dark);
+  z-index: -1;
+}
+
+.page-shell {
+  width: 100%;
+  padding: 32px 16px;
+  display: flex;
+  justify-content: center;
+}
+
+.output-card {
+  width: 100%;
+  max-width: 900px;
+  background: var(--glass-surface);
+  border-radius: 20px;
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(18px);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.65);
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.section-title {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.section-box {
+  background: rgba(0,0,0,0.25);
+  padding: 18px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.15);
+  line-height: 1.7;
+}
+
+#overviewContent {
+  white-space: pre-wrap;
+}
+
+/* Clause Styling */
+.clause-item {
+  padding: 14px;
+  background: rgba(255,255,255,0.06);
+  border-left: 4px solid rgba(255,255,255,0.5);
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+
+.clause-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+/* Case Sections Styling */
+.case-section-item {
+  margin-bottom: 12px;
+  padding: 12px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 8px;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.back-button {
+  padding: 8px 22px;
+  border-radius: 999px;
+  border: 1px solid #ffffff;
+  background: transparent;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.back-button:hover {
+  background: #ffffff;
+  color: #000;
+}
+</style>
+</head>
+
+<body>
+
+<video class="background-video" autoplay muted loop playsinline>
+  <source src="images/video.mp4" type="video/mp4" />
+</video>
+<div class="video-overlay"></div>
+
+<main class="page-shell">
+<section class="output-card">
+
+<h1 style="text-align:center;">Analysis Result</h1>
+
+<!-- OVERVIEW -->
+<div>
+  <div class="section-title">🧾 Overview</div>
+  <div class="section-box" id="overviewContent"></div>
+</div>
+
+<!-- KEY CLAUSES -->
+<div>
+  <div class="section-title">📜 Key Clauses</div>
+  <div class="section-box" id="clausesContainer"></div>
+</div>
+
+<!-- KEY SECTIONS USED -->
+<div>
+  <div class="section-title">📚 Key Sections of Your Case</div>
+  <div class="section-box" id="caseSections"></div>
+</div>
+
+<!-- POSSIBLE CHARGES (ONLY IF CRIMINAL) -->
+<div id="chargesWrapper" style="display:none;">
+  <div class="section-title">⚖️ Possible Charges</div>
+  <div class="section-box" id="possibleCharges"></div>
+</div>
+
+<div class="card-footer">
+  <button class="back-button" onclick="window.location.href='AfterLogin.html'">
+    Back
+  </button>
+</div>
+
+</section>
+</main>
+
+<script>
+function renderOutput() {
+  var stored = localStorage.getItem("analysisResult");
+  if (!stored) return;
+
+  let parsed;
+  try { 
+    parsed = JSON.parse(stored); 
+  } catch {
+    return;
+  }
+
+  const answer = parsed.answer || {};
+
+  // 🧾 OVERVIEW
+  document.getElementById("overviewContent").textContent =
+    answer.overview || "";
+
+  // 📜 KEY CLAUSES
+  var container = document.getElementById("clausesContainer");
+  container.innerHTML = "";
+
+  if (Array.isArray(answer.keyClauses)) {
+    answer.keyClauses.forEach(function(clause, index) {
+
+      var wrapper = document.createElement("div");
+      wrapper.className = "clause-item";
+
+      var title = document.createElement("div");
+      title.className = "clause-title";
+      title.textContent = (index + 1) + ". " + (clause.title || "");
+
+      var desc = document.createElement("div");
+      desc.style.opacity = "0.9";
+      desc.textContent = clause.description || "";
+
+      wrapper.appendChild(title);
+      wrapper.appendChild(desc);
+      container.appendChild(wrapper);
+    });
+  }
+
+  // 📚 KEY SECTIONS USED
+  var caseSections = document.getElementById("caseSections");
+  caseSections.innerHTML = "";
+
+  if (Array.isArray(parsed.keySections)) {
+    parsed.keySections.forEach(function(sec) {
+
+      var div = document.createElement("div");
+      div.className = "case-section-item";
+      div.innerHTML =
+        "<strong>" + sec.act + " – Section " + sec.section + "</strong><br>" +
+        (sec.title || "");
+
+      caseSections.appendChild(div);
+    });
+  }
+
+  // ⚖️ POSSIBLE CHARGES (only if criminal)
+  if (parsed.isCriminalCase && Array.isArray(parsed.keySections)) {
+
+    var chargesWrapper = document.getElementById("chargesWrapper");
+    var possibleCharges = document.getElementById("possibleCharges");
+
+    chargesWrapper.style.display = "block";
+    possibleCharges.innerHTML = "";
+
+    parsed.keySections.forEach(function(sec) {
+      var div = document.createElement("div");
+      div.className = "case-section-item";
+      div.innerHTML =
+        "<strong>" + sec.act + " – Section " + sec.section + "</strong><br>" +
+        "You may be liable under this section depending on the specific facts of your case.";
+      possibleCharges.appendChild(div);
+    });
+  }
+}
+
+document.addEventListener("DOMContentLoaded", renderOutput);
+</script>
+
+</body>
+</html>

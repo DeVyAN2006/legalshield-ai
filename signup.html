@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign Up</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    :root {
+      --lexease-primary: #3e2c23;
+    }
+
+    body {
+      font-family: "Angsana New", Angsana, serif;
+    }
+  </style>
+</head>
+
+<body class="min-h-screen flex items-center justify-center"
+      style="background-color: var(--lexease-primary);">
+
+  <div class="bg-white rounded-2xl shadow-2xl p-8 w-full max-w-md">
+
+    <!-- Logo -->
+    <!-- Logo -->
+<div class="flex justify-center mb-8">
+  <img src="images/logo.jpeg" 
+       alt="Logo"
+       class="w-40 h-40 object-contain">
+</div>
+
+    <!-- Heading -->
+    <h2 class="text-4xl font-bold text-[#3e2c23] text-center">
+      Create Account
+    </h2>
+    <p class="text-lg text-gray-600 text-center mb-6">
+      Join us and start your journey
+    </p>
+
+    <form class="space-y-4 text-lg">
+
+      <!-- Full Name -->
+      <div class="relative">
+        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400 text-xl">
+          👤
+        </span>
+        <input type="text" placeholder="Full Name"
+          class="w-full pl-10 py-2 border border-gray-300 rounded-lg 
+          focus:outline-none focus:ring-2 focus:ring-[#3e2c23]">
+      </div>
+
+      <!-- Email -->
+      <div class="relative">
+        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400 text-xl">
+          ✉️
+        </span>
+        <input type="email" placeholder="Email Address"
+          class="w-full pl-10 py-2 border border-gray-300 rounded-lg 
+          focus:outline-none focus:ring-2 focus:ring-[#3e2c23]">
+      </div>
+
+      <!-- Username -->
+      <div class="relative">
+        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400 text-xl">
+          @
+        </span>
+        <input type="text" placeholder="Username"
+          class="w-full pl-10 py-2 border border-gray-300 rounded-lg 
+          focus:outline-none focus:ring-2 focus:ring-[#3e2c23]">
+      </div>
+
+      <!-- Password -->
+      <div class="relative">
+        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400 text-xl">
+          🔒
+        </span>
+        <input type="password" placeholder="Password"
+          class="w-full pl-10 py-2 border border-gray-300 rounded-lg 
+          focus:outline-none focus:ring-2 focus:ring-[#3e2c23]">
+      </div>
+
+      <!-- Confirm Password -->
+      <div class="relative">
+        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400 text-xl">
+          🔒
+        </span>
+        <input type="password" placeholder="Confirm Password"
+          class="w-full pl-10 py-2 border border-gray-300 rounded-lg 
+          focus:outline-none focus:ring-2 focus:ring-[#3e2c23]">
+      </div>
+
+      <!-- Terms -->
+      <div class="flex items-center text-base text-gray-600">
+        <input type="checkbox" class="mr-2 accent-[#3e2c23]">
+        <label>
+          I agree to 
+          <a href="#" class="text-[#3e2c23] font-semibold hover:underline">
+            Terms & Conditions
+          </a>
+        </label>
+      </div>
+
+      <!-- Button -->
+      <button type="submit"
+        class="w-full bg-[#3e2c23] text-white py-2 rounded-lg 
+        hover:opacity-90 transition font-semibold text-lg">
+        Create Account
+      </button>
+
+      <!-- Sign In -->
+      <p class="text-center text-base text-gray-600 mt-4">
+        Already have an account?
+        <a href="signin.html" class="text-[#3e2c23] font-semibold hover:underline">
+          Sign In
+        </a>
+      </p>
+
+    </form>
+
+  </div>
+
+</body>
+</html>
