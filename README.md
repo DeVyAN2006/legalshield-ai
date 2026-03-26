@@ -21,22 +21,22 @@ System Architecture
 LexEase uses a multi-stage Retrieval-Augmented Generation (RAG) pipeline:
 
 User Query
-     ↓
+     ->
 React Frontend
-     ↓
+     ->
 Node.js Backend API
-     ↓
+     ->
 Python Retrieval Engine
-     ↓
+     ->
 Hybrid Search
 (BM25 + Sentence Embeddings)
-     ↓
+     ->
 Cross-Encoder Reranking
-     ↓
+     ->
 Top Legal Sections
-     ↓
+     ->
 LLM Reasoning (Gemini)
-     ↓
+     ->
 Structured Legal Response
 
 
